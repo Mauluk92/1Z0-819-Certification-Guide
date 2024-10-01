@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,14 +49,6 @@ public class JavaFacade {
 
     }
 
-    public static int compileWithoutClassPath(String outputDir, String sourcePath, String... files){
-        return compile(outputDir, sourcePath, sourcePath, files);
-    }
-
-    public static int compileWithoutSourcePath(String outputDir, String... files) {
-        return compile(outputDir, outputDir, outputDir, files);
-    }
-
 
     public static int run(List<String> args, String compiledPath, String classPath, String mainClass) {
         try {
@@ -94,54 +84,6 @@ public class JavaFacade {
             } else {
                 System.out.println("Executed successfully. Output:");
                 System.out.println(runOutput);
-            }
-            return runExitCode;
-
-        } catch (Exception e) {
-            logger.severe(e.getMessage());
-            return -1;
-        }
-    }
-
-    public static int runWithoutArgs(String compiledPath, String mainClass) {
-        return run(List.of(), compiledPath, compiledPath, mainClass);
-    }
-
-    public static int createNonExecutableJar(String outputDir, String classPath, String nameJar) {
-        try {
-            ProcessBuilder runBuilder = new ProcessBuilder();
-            Path outputFile = Paths.get(outputDir, nameJar);
-            List<String> commands = new ArrayList<>();
-            commands.add("jar");
-            commands.add("cf");
-            commands.add(outputFile.toString());
-            commands.add("-C");
-            commands.add(classPath);
-            commands.add(".");
-            runBuilder.command(commands);
-
-            Process runProcess = runBuilder.start();
-
-            BufferedReader runOutputReader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
-            StringBuilder runOutput = new StringBuilder();
-            String line;
-            while ((line = runOutputReader.readLine()) != null) {
-                runOutput.append(line).append("\n");
-            }
-
-            BufferedReader runErrorReader = new BufferedReader(new InputStreamReader(runProcess.getErrorStream()));
-            StringBuilder runErrors = new StringBuilder();
-            while ((line = runErrorReader.readLine()) != null) {
-                runErrors.append(line).append("\n");
-            }
-
-            int runExitCode = runProcess.waitFor();
-            if (runExitCode != 0) {
-                logger.severe("Error during execution (exit code " + runExitCode + "):");
-                logger.severe(runErrors.toString());
-            } else {
-                logger.info("Executed successfully. Output:");
-                logger.info(runOutput.toString());
             }
             return runExitCode;
 

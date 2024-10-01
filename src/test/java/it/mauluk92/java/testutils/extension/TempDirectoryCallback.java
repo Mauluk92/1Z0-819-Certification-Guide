@@ -1,14 +1,20 @@
 package it.mauluk92.java.testutils.extension;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class CleanUpCompileTempDirectoryCallBack implements AfterEachCallback {
+public class TempDirectoryCallback implements AfterEachCallback, BeforeEachCallback {
 
+    @Override
+    public void beforeEach(ExtensionContext context) throws Exception {
+        Path tempDirectoryPath = Files.createTempDirectory("temp");
+        context.getStore(ExtensionContext.Namespace.GLOBAL).put("outputDir", tempDirectoryPath.toString());
+    }
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {

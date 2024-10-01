@@ -1,6 +1,6 @@
 package it.mauluk92.java.c1;
 
-import it.mauluk92.java.testutils.extension.CleanUpCompileTempDirectoryCallBack;
+import it.mauluk92.java.testutils.extension.TempDirectoryCallback;
 import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
 import it.mauluk92.java.testutils.extension.annotation.CompileClasses;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * This class contains tests to validate the rules related to class definitions
  * in Java files, specifically regarding public and non-public classes.
  */
-@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, CleanUpCompileTempDirectoryCallBack.class})
+@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, TempDirectoryCallback.class})
 public class ClassesVsFilesTest {
     /**
      * Test to ensure that two public classes cannot be in the same file.

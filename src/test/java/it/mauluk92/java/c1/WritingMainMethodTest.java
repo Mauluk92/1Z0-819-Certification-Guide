@@ -1,6 +1,6 @@
 package it.mauluk92.java.c1;
 
-import it.mauluk92.java.testutils.extension.CleanUpCompileTempDirectoryCallBack;
+import it.mauluk92.java.testutils.extension.TempDirectoryCallback;
 import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
 import it.mauluk92.java.testutils.extension.annotation.CompileClasses;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * This class contains tests to validate the argument passing
  * to the main method
  */
-@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, CleanUpCompileTempDirectoryCallBack.class})
+@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, TempDirectoryCallback.class})
 public class WritingMainMethodTest {
     /**
      * This test ensures that the arguments passed are effectively

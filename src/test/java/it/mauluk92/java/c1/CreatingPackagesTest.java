@@ -1,6 +1,6 @@
 package it.mauluk92.java.c1;
 
-import it.mauluk92.java.testutils.extension.CleanUpCompileTempDirectoryCallBack;
+import it.mauluk92.java.testutils.extension.TempDirectoryCallback;
 import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
 import it.mauluk92.java.testutils.extension.annotation.CompileClasses;
@@ -10,13 +10,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.nio.file.Paths;
-
 /**
  * This class contains tests that validates the rules for
  * logical groupings of classes under package and import statements
  */
-@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, CleanUpCompileTempDirectoryCallBack.class})
+@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, TempDirectoryCallback.class})
 public class CreatingPackagesTest {
     /**
      * This test ensures that grouping classes under packages

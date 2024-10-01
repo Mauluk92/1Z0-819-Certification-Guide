@@ -1,6 +1,6 @@
 package it.mauluk92.java.c1;
 
-import it.mauluk92.java.testutils.extension.CleanUpCompileTempDirectoryCallBack;
+import it.mauluk92.java.testutils.extension.TempDirectoryCallback;
 import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
 import it.mauluk92.java.testutils.extension.annotation.CompileClasses;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * This class contains test to ensure that correct order
  * of elements inside a class is needed in order to compile
  */
-@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, CleanUpCompileTempDirectoryCallBack.class})
+@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, TempDirectoryCallback.class})
 public class OrderingOfElementsInAClassTest {
 
     /**
