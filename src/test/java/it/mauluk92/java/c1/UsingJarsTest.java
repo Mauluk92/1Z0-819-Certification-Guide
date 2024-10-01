@@ -1,6 +1,5 @@
 package it.mauluk92.java.c1;
 
-import it.mauluk92.java.testutils.JavaFacade;
 import it.mauluk92.java.testutils.extension.CleanUpCompileTempDirectoryCallBack;
 import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
@@ -10,11 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.io.TempDir;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
-import java.nio.file.Path;
 
 /**
  * This class contains tests to validate the use of

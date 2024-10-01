@@ -92,8 +92,8 @@ public class JavaFacade {
                 logger.severe("Error during execution (exit code " + runExitCode + "):");
                 logger.severe(runErrors.toString());
             } else {
-                logger.info("Executed successfully. Output:");
-                logger.info(runOutput.toString());
+                System.out.println("Executed successfully. Output:");
+                System.out.println(runOutput);
             }
             return runExitCode;
 
