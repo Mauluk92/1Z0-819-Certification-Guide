@@ -1,44 +1,44 @@
 package it.mauluk92.java.c1;
 
-import it.mauluk92.java.testutils.JavaFacade;
+import it.mauluk92.java.testutils.extension.CleanUpCompileTempDirectoryCallBack;
+import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
+import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
+import it.mauluk92.java.testutils.extension.annotation.CompileClasses;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
-import java.nio.file.Path;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * This class contains test to ensure that correct order
  * of elements inside a class is needed in order to compile
  */
+@ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, CleanUpCompileTempDirectoryCallBack.class})
 public class OrderingOfElementsInAClassTest {
 
     /**
      * The correct order of elements inside a class, where a package is
      * optional, imports are optional if no classes are imported
      * and a class definition is mandatory
-     * @param outputDir outputDir the temporary directory used to store the compilation output
-     * @throws IOException if an I/O error occurs while accessing the file
      */
     @Test
     @DisplayName("Correct order of element in a class is PIC (Package, Imports, Class)")
-    public void correctOrderOfElementsTest(@TempDir Path outputDir) throws IOException {
-        Path fileToCompile = new ClassPathResource("c1/ordering_of_elements_in_a_class/CorrectOfOrderInAClass.java").getFile().toPath();
-        Assertions.assertEquals(0, JavaFacade.compileWithoutSourcePath(outputDir.toString(), fileToCompile.toString()));
+    public void correctOrderOfElementsTest(
+            @CompileClasses(classesToCompile = "CorrectOfOrderInAClass.java", sourcePath = "c1/ordering_of_elements_in_a_class")
+            Integer outputCompilation
+    ) {
+        Assertions.assertEquals(0, outputCompilation);
     }
 
     /**
      * Incorrect order won't compile
-     * @param outputDir outputDir the temporary directory used to store the compilation output
-     * @throws IOException if an I/O error occurs while accessing the file
      */
     @Test
     @DisplayName("Incorrect order of elements in a class must not compile")
-    public void incorrectOrderOfElementsMustNotCompileTest(@TempDir Path outputDir) throws IOException {
-        Path fileToCompile = new ClassPathResource("c1/ordering_of_elements_in_a_class/IncorrectOrderOfElementsMustNotCompile.java").getFile().toPath();
-        Assertions.assertEquals(1, JavaFacade.compileWithoutSourcePath(outputDir.toString(), fileToCompile.toString()));
+    public void incorrectOrderOfElementsMustNotCompileTest(
+            @CompileClasses(classesToCompile = "IncorrectOrderOfElementsMustNotCompile.java", sourcePath = "c1/ordering_of_elements_in_a_class")
+            Integer outputCompilation
+    ) {
+        Assertions.assertEquals(1, outputCompilation);
     }
 }
