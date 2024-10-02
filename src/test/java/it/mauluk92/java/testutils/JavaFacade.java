@@ -36,10 +36,10 @@ public class JavaFacade {
             }
             int compileExitCode = compileProcess.waitFor();
             if (compileExitCode != 0) {
-                logger.info("Error during compilation (exit code " + compileExitCode + "):");
-                logger.info(compileErrors.toString());
+                System.out.println("Error during compilation (exit code " + compileExitCode + "):" + "files: " + Arrays.toString(files));
+                System.out.println(compileErrors);
             } else {
-                logger.info("Compiled successfully.");
+               System.out.println("Compiled successfully files: " + Arrays.toString(files));
             }
             return compileExitCode;
         } catch (IOException | InterruptedException e) {
@@ -79,10 +79,10 @@ public class JavaFacade {
 
             int runExitCode = runProcess.waitFor();
             if (runExitCode != 0) {
-                logger.severe("Error during execution (exit code " + runExitCode + "):");
-                logger.severe(runErrors.toString());
+                System.out.printf("Error during execution  of %s (exit code " + runExitCode + "):", mainClass);
+                System.out.println(runErrors);
             } else {
-                System.out.println("Executed successfully. Output:");
+                System.out.printf("Executed successfully file %s. Output:%n", mainClass);
                 System.out.println(runOutput);
             }
             return runExitCode;
