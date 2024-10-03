@@ -33,7 +33,7 @@ public class OperatorPrecedenceTest {
      * Assignment operators
      */
     @Test
-    @DisplayName("Logical complement flips the boolean value of its operand")
+    @DisplayName("Rules of precedence according to Java specification")
     public void rulesOfPrecedence(
             @CompileClasses(classesToCompile = "RulesOfPrecedence.java", sourcePath = "c3/operator_precedence")
             Integer outputCompilation,
