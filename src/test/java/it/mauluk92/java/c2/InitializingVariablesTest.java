@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * This class contains rules to validate the initialization of variables in Java 11
- * with var (local type inference), default initialization for non-locale variables and
+ * with var (local type inference), default initialization for non-local variables and
  * multiple variable initialization
  */
 @ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, TempDirectoryCallback.class})
