@@ -18,6 +18,7 @@ class ClassWithLambda{
             System.out.println(finalLocalInteger); //Allowed
             System.out.println(nonFinalInstanceInteger); // Allowed
             System.out.println(NON_FINAL_STATIC_INTEGER); // Allowed
+            System.out.println(nonFinalLocalInteger); // Allowed, because it is not being updated!
             System.out.println(nonFinalLocalInteger++); // Will not compile here! Because not allowed to use a non effectively final variable!
             return s.isEmpty();
         };
