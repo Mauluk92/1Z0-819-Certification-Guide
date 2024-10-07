@@ -9,6 +9,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+/**
+ * This class contains tests to validate rules regarding lambdas and variables
+ */
 @ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, TempDirectoryCallback.class})
 public class WorkingWithVariablesInLambdasTest {
 
