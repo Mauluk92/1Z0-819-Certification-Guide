@@ -147,6 +147,44 @@ public class DeclaringConstructorsTest {
         Assertions.assertNotEquals(0, outputCompilation);
     }
 
+    /**
+     * Initializing a class involves invoking all static members in the class hierarchy,
+     * starting with the highest class and working downward.
+     * This is often referred as loading the class. The JVM controls when
+     * the class is initialized, although you can assume the class is loaded before it is
+     * used.
+     * It happens at most once for each class
+     */
+    @Test
+    @DisplayName("Initializing a class")
+    public void initializingClass(
+            @CompileClasses(classesToCompile = "InitializingAClass.java", sourcePath = "c8/declaring_constructors")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "InitializingAClass")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
+    }
+
+    /**
+     * First start at the lowest level constructor where the new keyword is used
+     * If missing a call to super or this, the compiler will automatically insert a super call
+     * to the parent no arg constructor. Then progress upward and note the order of constructors. Finally,
+     * initialize each class with the superclass, processing each instance initializers and declarations
+     */
+    @Test
+    @DisplayName("Initializing an instance")
+    public void initializeInstance(
+            @CompileClasses(classesToCompile = "InitializingInstance.java", sourcePath = "c8/declaring_constructors")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "InitializingInstance")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
+    }
+
 
 
 }
