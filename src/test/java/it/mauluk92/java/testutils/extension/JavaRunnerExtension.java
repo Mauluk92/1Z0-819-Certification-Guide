@@ -31,17 +31,17 @@ public class JavaRunnerExtension implements ParameterResolver {
             if (parameterContext.isAnnotated(ExecuteJavaProgram.class)) {
                 ExecuteJavaProgram annotation = parameterContext.getParameter().getAnnotation(ExecuteJavaProgram.class);
                 String separatorClassPath = System.getProperty("os.name").contains("Windows") ? ";" : ":";
-                File[] resources = new File[annotation.classPath().length + 1];
-                for(int i = 0; i < annotation.classPath().length; i++){
+                File[] resources = new File[(int) (Arrays.stream(annotation.classPath()).filter(s -> !s.isEmpty()).count() + 1)];
+                for (int i = 0; i < annotation.classPath().length; i++) {
                     resources[i] = new ClassPathResource(annotation.classPath()[i]).getFile();
                 }
-                resources[annotation.classPath().length] = new File(outputDirpath);
+                resources[resources.length - 1] = new File(outputDirpath);
                 String classPath = Arrays.stream(resources).map(File::getAbsolutePath).collect(Collectors.joining(separatorClassPath));
                 String[] commandLineArgs = annotation.commandLineArguments();
                 String mainClassPath = annotation.mainClass();
                 return JavaFacade.run(Arrays.asList(commandLineArgs), outputDirpath, classPath, mainClassPath);
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new ParameterResolutionException("Could not locate a path", e);
         }
         return -1;
