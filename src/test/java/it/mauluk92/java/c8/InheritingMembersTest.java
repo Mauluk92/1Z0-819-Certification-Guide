@@ -40,4 +40,31 @@ public class InheritingMembersTest {
     ){
         Assertions.assertNotEquals(0, outputCompilation);
     }
+    /**
+     * The method may not declare a checked exception that is
+     * new or broader than the class of any exception declared in
+     * the parent class method
+     */
+
+    @Test
+    @DisplayName("Checked exception rule in overriding")
+    public void exceptionRuleOverriding(
+            @CompileClasses(classesToCompile = "ExceptionRuleOverriding.java", sourcePath = "c8/inheriting_members")
+            Integer outputCompilation
+    ){
+        Assertions.assertNotEquals(0, outputCompilation);
+    }
+
+    /**
+     * If the method return a type, it must be a covariant type of the
+     * return type of the parent class method
+     */
+    @Test
+    @DisplayName("Covariant return type rule in overriding")
+    public void covariantReturnTypeRuleOverriding(
+            @CompileClasses(classesToCompile = "CovariantReturnTypeRuleOverriding.java", sourcePath = "c8/inheriting_members")
+            Integer outputCompilation
+    ){
+        Assertions.assertNotEquals(0, outputCompilation);
+    }
 }
