@@ -4,6 +4,7 @@ import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
 import it.mauluk92.java.testutils.extension.TempDirectoryCallback;
 import it.mauluk92.java.testutils.extension.annotation.CompileClasses;
+import it.mauluk92.java.testutils.extension.annotation.ExecuteJavaProgram;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -124,5 +125,67 @@ public class InheritingMembersTest {
     ){
         Assertions.assertNotEquals(0, outputCompilation);
     }
+
+    /**
+     * In Java, you can't override a private method since they are not inherited.
+     * But the child can redefine its own version of the method. It just means it is not an overriden
+     * version of the parent class method
+     */
+    @Test
+    @DisplayName("Redefining private methods allowed")
+    public void redefiningPrivateMethods(
+            @CompileClasses(classesToCompile = "RedefiningPrivateMethods.java", sourcePath = "c8/inheriting_members")
+            Integer outputCompilation
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+    }
+
+    /**
+     * A hidden method occurs when a child class defines a static method with the same
+     * name and signature as an inherited static method defined in a parent class.
+     * Both method should be marked as static if the code is to compile.
+     */
+    @Test
+    @DisplayName("Hiding static methods")
+    public void hidingStaticMethods(
+            @CompileClasses(classesToCompile = "HidingStaticMethods.java", sourcePath = "c8/inheriting_members")
+            Integer outputCompilation
+    ){
+        Assertions.assertNotEquals(0, outputCompilation);
+    }
+
+    /**
+     * Final methods are used to enforce certain rules or behavior inside a class.
+     * Overriding a final method will result in a compilation error
+     */
+    @Test
+    @DisplayName("Overriding final methods result in compilation error")
+    public void overridingFinalMethods(
+            @CompileClasses(classesToCompile = "OverridingFinalMethods.java", sourcePath = "c8/inheriting_members")
+            Integer outputCompilation
+    ){
+        Assertions.assertNotEquals(0, outputCompilation);
+    }
+
+    /**
+     * Java doesn't allow variables to be overriden, but they can be hidden.
+     * A hidden variable occurs when a child class defines a variable with the same
+     * name as an inherited variable defined in the parent class. This creates two distinct copies
+     * of the variable within an instance of the child class: one instance variable
+     * in the parent and one in the child
+     */
+    @Test
+    @DisplayName("Hiding instance variables")
+    public void hidingVariables(
+            @CompileClasses(classesToCompile = "HidingVariables.java", sourcePath = "c8/inheriting_members")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "HidingVariables")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
+    }
+
+
 
 }
