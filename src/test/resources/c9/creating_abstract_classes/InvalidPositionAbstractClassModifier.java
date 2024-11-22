@@ -1,0 +1,1 @@
+class abstract InvalidAbstractClass {} // Will not compile since abstract modifier follows class keyword
