@@ -1,0 +1,1 @@
+protected interface InterfaceProtected {} // Will not compile

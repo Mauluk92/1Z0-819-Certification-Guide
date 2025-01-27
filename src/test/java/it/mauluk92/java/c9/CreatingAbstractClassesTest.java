@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
- * This class contains tests to validate rules about abstract classes and interfaces
+ * This class contains tests to validate rules about abstract classe
  */
 @ExtendWith({JavaCompilerExtension.class, JavaRunnerExtension.class, TempDirectoryCallback.class})
 public class CreatingAbstractClassesTest {
