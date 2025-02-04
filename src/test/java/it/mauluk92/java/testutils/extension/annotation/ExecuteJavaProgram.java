@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExecuteJavaProgram {
 
-    String mainClass();
+    String mainClass() default "";
     String[] classPath() default "";
     String modulePath() default "";
     String moduleName() default "";

@@ -41,6 +41,9 @@ public class JavaRunnerExtension implements ParameterResolver {
                 String mainClassPath = annotation.mainClass();
                 String modulePath = annotation.modulePath();
                 String moduleName = annotation.moduleName();
+                if(!moduleName.isEmpty()){
+                    modulePath = modulePath.isEmpty() ? outputDirpath : modulePath;
+                }
                 return JavaFacade.run(Arrays.asList(commandLineArgs), outputDirpath, classPath, mainClassPath, modulePath, moduleName);
             }
         } catch (IOException e) {
