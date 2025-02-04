@@ -15,12 +15,14 @@ public class JavaFacade {
     private final static Logger logger = Logger.getLogger(JavaFacade.class.getName());
 
 
-    public static int compile(String outputDir, String classPath, String sourcePath, String... files) {
+    public static int compile(String outputDir, String classPath, String sourcePath, String modulePath, String... files) {
         try {
             ProcessBuilder compileBuilder = new ProcessBuilder();
             compileBuilder.directory(new File(sourcePath));
             List<String> commands = new ArrayList<>();
             commands.add("javac");
+            commands.add("-p");
+            commands.add(modulePath);
             commands.add("-cp");
             commands.add(classPath);
             commands.add("-d");
@@ -50,16 +52,25 @@ public class JavaFacade {
     }
 
 
-    public static int run(List<String> args, String compiledPath, String classPath, String mainClass) {
+    public static int run(List<String> args, String compiledPath, String classPath, String mainClass, String modulePath, String moduleName) {
         try {
             ProcessBuilder runBuilder = new ProcessBuilder();
             runBuilder.directory(new File(compiledPath));
             List<String> commands = new ArrayList<>();
-            commands.add("java");
-            commands.add("-cp");
-            commands.add(classPath);
-            commands.add(mainClass);
-            commands.addAll(args);
+            if(modulePath != null && !modulePath.isEmpty() && moduleName != null && !moduleName.isEmpty()){
+                commands.add("java");
+                commands.add("-p");
+                commands.add(modulePath);
+                commands.add("-m");
+                commands.add(moduleName);
+            }else {
+                commands.add("java");
+                commands.add("-cp");
+                commands.add(classPath);
+                commands.add(mainClass);
+
+                commands.addAll(args);
+            }
             runBuilder.command(commands);
 
             Process runProcess = runBuilder.start();

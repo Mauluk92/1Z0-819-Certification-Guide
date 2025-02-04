@@ -11,5 +11,7 @@ public @interface ExecuteJavaProgram {
 
     String mainClass();
     String[] classPath() default "";
+    String modulePath() default "";
+    String moduleName() default "";
     String[] commandLineArguments() default {};
 }

@@ -11,4 +11,5 @@ public @interface CompileClasses {
     String[] classesToCompile();
     String classPath() default "";
     String sourcePath() default "";
+    String modulePath() default "";
 }

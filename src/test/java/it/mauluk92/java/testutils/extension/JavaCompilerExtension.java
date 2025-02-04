@@ -27,11 +27,12 @@ public class JavaCompilerExtension implements ParameterResolver {
         String tempDirectory = context.getStore(ExtensionContext.Namespace.GLOBAL).get("outputDir", String.class);
         if (parameterContext.isAnnotated(CompileClasses.class)) {
             CompileClasses annotation = parameterContext.getParameter().getAnnotation(CompileClasses.class);
-            String classPath = annotation.classPath().isEmpty() ? tempDirectory.toString() : new ClassPathResource(annotation.classPath()).getFile().getAbsolutePath();
-            String sourcePath = annotation.sourcePath().isEmpty() ? tempDirectory.toString() : new ClassPathResource(annotation.sourcePath()).getFile().getAbsolutePath();
+            String classPath = annotation.classPath().isEmpty() ? tempDirectory : new ClassPathResource(annotation.classPath()).getFile().getAbsolutePath();
+            String sourcePath = annotation.sourcePath().isEmpty() ? tempDirectory : new ClassPathResource(annotation.sourcePath()).getFile().getAbsolutePath();
+            String modulePath = annotation.modulePath().isEmpty() ? tempDirectory : new ClassPathResource(annotation.modulePath()).getFile().getAbsolutePath();
             String[] classes = annotation.classesToCompile();
             classes = Arrays.stream(classes).map(Paths::get).map(Object::toString).toArray(String[]::new);
-            return JavaFacade.compile(tempDirectory.toString(), classPath, sourcePath, classes);
+            return JavaFacade.compile(tempDirectory, classPath, sourcePath, modulePath, classes);
         }
 
     }catch (IOException exception){

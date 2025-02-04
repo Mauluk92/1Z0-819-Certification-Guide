@@ -39,7 +39,9 @@ public class JavaRunnerExtension implements ParameterResolver {
                 String classPath = Arrays.stream(resources).map(File::getAbsolutePath).collect(Collectors.joining(separatorClassPath));
                 String[] commandLineArgs = annotation.commandLineArguments();
                 String mainClassPath = annotation.mainClass();
-                return JavaFacade.run(Arrays.asList(commandLineArgs), outputDirpath, classPath, mainClassPath);
+                String modulePath = annotation.modulePath();
+                String moduleName = annotation.moduleName();
+                return JavaFacade.run(Arrays.asList(commandLineArgs), outputDirpath, classPath, mainClassPath, modulePath, moduleName);
             }
         } catch (IOException e) {
             throw new ParameterResolutionException("Could not locate a path", e);
