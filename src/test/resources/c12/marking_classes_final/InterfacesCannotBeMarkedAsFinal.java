@@ -1,0 +1,1 @@
+final interface AnInterface {} // Won't compile since all interfaces are implicitly abstract
