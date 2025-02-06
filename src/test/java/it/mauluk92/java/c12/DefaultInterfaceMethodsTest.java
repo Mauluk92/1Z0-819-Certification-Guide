@@ -74,4 +74,29 @@ public class DefaultInterfaceMethodsTest {
     ){
         Assertions.assertNotEquals(0, outputCompilation);
     }
+
+    /**
+     * Default methods can be overridden by class implementing the interface
+     */
+    @Test
+    @DisplayName("Default methods can be overridden")
+    public void defaultMethodsCanBeOverridden(
+            @CompileClasses(classesToCompile = "DefaultMethodsCanBeOverridden.java", sourcePath = "c12/default_interface_methods")
+            Integer outputCompilation
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+    }
+
+    /**
+     * Class with two implementing interface and same method signature
+     * must explicitly override and redefine the method inherited
+     */
+    @Test
+    @DisplayName("Diamond inheritance problem")
+    public void diamondInheritanceProblem(
+            @CompileClasses(classesToCompile = "DiamondInheritanceProblem.java", sourcePath = "c12/default_interface_methods")
+            Integer outputCompilation
+    ){
+        Assertions.assertNotEquals(0, outputCompilation);
+    }
 }
