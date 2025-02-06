@@ -4,6 +4,7 @@ import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
 import it.mauluk92.java.testutils.extension.TempDirectoryCallback;
 import it.mauluk92.java.testutils.extension.annotation.CompileClasses;
+import it.mauluk92.java.testutils.extension.annotation.ExecuteJavaProgram;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -98,5 +99,21 @@ public class DefaultInterfaceMethodsTest {
             Integer outputCompilation
     ){
         Assertions.assertNotEquals(0, outputCompilation);
+    }
+
+    /**
+     * Calling a version of a default method from a specific interface
+     * requires a special convention
+     */
+    @Test
+    @DisplayName("Calling a specific method from an interface implemented")
+    public void callingSpecificDefaultMethods(
+            @CompileClasses(classesToCompile = "CallingSpecificDefaultMethods.java", sourcePath = "c12/default_interface_methods")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "CallingSpecificDefaultMethods")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
     }
 }
