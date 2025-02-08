@@ -1,0 +1,1 @@
+@interface MarkerAnnotation{} // This annotation does not specify any information, thus it's a marker annotation
