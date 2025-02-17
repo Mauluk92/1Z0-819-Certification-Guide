@@ -62,15 +62,18 @@ public class JavaFacade {
                 commands.add("-p");
                 commands.add(modulePath);
                 commands.add("-m");
+                commands.add("-ea");
                 commands.add(moduleName);
             }else {
                 commands.add("java");
                 commands.add("-cp");
                 commands.add(classPath);
+                commands.add("-ea");
                 commands.add(mainClass);
 
                 commands.addAll(args);
             }
+
             runBuilder.command(commands);
 
             Process runProcess = runBuilder.start();
