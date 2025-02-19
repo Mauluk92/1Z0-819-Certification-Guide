@@ -164,5 +164,4 @@ public class UsingConcurrentCollectionTest {
         Assertions.assertEquals(0, outputCompilation);
         Assertions.assertNotEquals(0, outputExecution);
     }
-
 }
