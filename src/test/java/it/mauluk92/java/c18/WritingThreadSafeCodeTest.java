@@ -1,5 +1,5 @@
 package it.mauluk92.java.c18;
-
+import java.util.concurrent.locks.*;
 import it.mauluk92.java.testutils.extension.JavaCompilerExtension;
 import it.mauluk92.java.testutils.extension.JavaRunnerExtension;
 import it.mauluk92.java.testutils.extension.TempDirectoryCallback;
@@ -84,6 +84,76 @@ public class WritingThreadSafeCodeTest {
             @CompileClasses(classesToCompile = "SynchronizedBlock.java", sourcePath = "c18/writing_thread_safe_code")
             Integer outputCompilation,
             @ExecuteJavaProgram(mainClass = "SynchronizedBlock")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
+    }
+
+    /**
+     * A synchronized block supports only a limited set of
+     * functionality. For example what if we want to check whether
+     * a lock is available and, if it is not, perform some other tasks?
+     * The concurrency API includes the {@link Lock} interface. That is
+     * conceptually similar using the synchronized keyword, but with a lot
+     * more functionality. Instead of synchronizing any object, we can
+     * lock only an object that implements the Lock interface.
+     * Using the Lock interface is pretty easy.
+     * When you need to protect a piece of code from multithreaded processing,
+     * create an instance of Lock that all threads have access to.
+     * Each one call lock before it enters the protected code and calls unlock()
+     * before it exits.
+     */
+    @Test
+    @DisplayName("Lock interface")
+    public void lockInterface(
+            @CompileClasses(classesToCompile = "LockInterface.java", sourcePath = "c18/writing_thread_safe_code")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "LockInterface")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
+    }
+
+    /**
+     * While the reentrant lock class allows you to wait
+     * for a lock, it so far suffers the same problem as a
+     * synchronized block. A thread could end up waiting
+     * forever to obtain a lock. Luckily includes two additional methods
+     * that make the lock interface a lot safer to use than a
+     * synchronized block. The Lock maintains a counter of the
+     * number of times a lock has been given to a thread.
+     * To release the Lock for other to use, unlock() must be called
+     * the same number of times the lock has been granted!
+     */
+    @Test
+    @DisplayName("Try Lock method")
+    public void tryLockMethod(
+            @CompileClasses(classesToCompile = "TryLockMethod.java", sourcePath = "c18/writing_thread_safe_code")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "TryLockMethod")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
+    }
+
+    /**
+     * The cycling barrier class takes in its constructor a limit value,
+     * indicating a number of threads to wait for.
+     * As each thread finishes, it calls the await method on the cyclic barrier
+     * once the specified numbers of threads have each called await, the barrier
+     * is released.
+     * It allows us to perform complex, multithreaded tasks and wait at
+     * logical barriers.
+     */
+    @Test
+    @DisplayName("Using a cyclic barrier")
+    public void usingCyclicBarrier(
+            @CompileClasses(classesToCompile = "UsingCyclicBarrier.java", sourcePath = "c18/writing_thread_safe_code")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "UsingCyclicBarrier")
             Integer outputExecution
     ){
         Assertions.assertEquals(0, outputCompilation);
