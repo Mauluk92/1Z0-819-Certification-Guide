@@ -86,4 +86,26 @@ public class SerializingDataTest {
         Assertions.assertEquals(0, outputCompilation);
         Assertions.assertNotEquals(0, outputExecution);
     }
+
+
+    /**
+     * When you deserialize an object, <em>the constructor of the serialized
+     * class, along with any instance initializers, is not called when the object
+     * is created</em>. Java will the no-arg constructor of the first
+     * non-serializable parent class it can find in the class hierarchy.
+     * Also, any static or transient fields are ignored. Values not provided
+     * will be given their default Java value, such as null for String or 0
+     * for int values.
+     */
+    @Test
+    @DisplayName("Deserialization process")
+    public void deserializationProcess(
+            @CompileClasses(classesToCompile = "DeserializationProcess.java", sourcePath = "c19/serializing_data")
+            Integer outputCompilation,
+            @ExecuteJavaProgram(mainClass = "DeserializationProcess")
+            Integer outputExecution
+    ){
+        Assertions.assertEquals(0, outputCompilation);
+        Assertions.assertEquals(0, outputExecution);
+    }
 }

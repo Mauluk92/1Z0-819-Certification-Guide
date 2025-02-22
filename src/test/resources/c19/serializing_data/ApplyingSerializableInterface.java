@@ -5,7 +5,7 @@ public class ApplyingSerializableInterface {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream stream = new ObjectOutputStream(byteArrayOutputStream);
 
-        System.out.println("Seirializing object!");
+        System.out.println("Serializing object!");
 
         ObjectToSerialize object = new ObjectToSerialize();
         object.setName("Nicola");

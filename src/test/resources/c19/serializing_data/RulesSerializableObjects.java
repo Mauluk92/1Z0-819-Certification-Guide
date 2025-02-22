@@ -4,7 +4,7 @@ public class RulesSerializableObjects {
     public static void main(String[] args) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream stream = new ObjectOutputStream(byteArrayOutputStream);
-        System.out.println("Seirializing object!");
+        System.out.println("Serializing object!");
 
         InvalidSerializableObject object = new InvalidSerializableObject();
 
