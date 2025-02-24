@@ -12,6 +12,8 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * This class contain tests to validate rules about managing file attributes
@@ -82,5 +84,98 @@ public class ManagingFileAttributesTest {
         Assertions.assertTrue(Files.isWritable(file));
         Assertions.assertFalse(Files.isHidden(file));
         Assertions.assertTrue(Files.isExecutable(file));
+    }
+
+    /**
+     * The {@link Files} class includes a method to determine
+     * the size of file in bytes. The size returns by this method
+     * references the conceptual size of data, and this may differ
+     * from the actual size on the persistent storage.
+     */
+    @Test
+    @DisplayName("Checking file size")
+    public void checkFileSize(
+            @TempDir Path tempDir
+    ) throws IOException {
+        Path directory = tempDir.resolve("directory");
+        Path subDirectory = directory.resolve("subdirectory");
+        Path file = subDirectory.resolve("file.txt");
+
+        // Creating directories and files
+
+        Files.createDirectories(subDirectory);
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("Hello World!\nSecond Line!".getBytes());
+
+        // Writing to file
+
+        Files.copy(byteArrayInputStream, file);
+
+        System.out.println("File size is: " + Files.size(file));
+        Assertions.assertTrue(Files.size(file) > 0);
+    }
+
+    /**
+     * Most operating systems support a last modified date/time
+     * value with each file. Some applications use this to determine
+     * when the files' contents should be read again. In the majority
+     * of circumstances, it is a lot faster to check a single metadata attribute
+     * than to record the entire contents of file.
+     */
+    @Test
+    @DisplayName("Checking file last modified timestamp")
+    public void checkLastModified(
+            @TempDir Path tempDir
+    ) throws IOException {
+        Path directory = tempDir.resolve("directory");
+        Path subDirectory = directory.resolve("subdirectory");
+        Path file = subDirectory.resolve("file.txt");
+
+        // Creating directories and files
+
+        Files.createDirectories(subDirectory);
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("Hello World!\nSecond Line!".getBytes());
+
+        // Writing to file
+
+        Files.copy(byteArrayInputStream, file);
+
+        System.out.println("File last modified time : " + Files.getLastModifiedTime(file).toInstant());
+        Assertions.assertTrue(Files.getLastModifiedTime(file).toMillis() > 0L);
+    }
+
+    /**
+     * Put simply, it is far more efficient to ask the file system for
+     * all attributes at once rather than performing multiple
+     * round-trips to the file system.
+     * NIO.2 addresses both of these concern by allowing you
+     * to construct views for various file systems with a
+     * single method call. A view is a group of related attributes
+     * for a particular file system type.
+     * NIO.2 includes two methods for working with attributes:
+     * a read-only attributes method and updatable view method
+     */
+    @Test
+    @DisplayName("Obtaining Basic File Attributes")
+    public void obtainingBasicFileAttributes(
+            @TempDir Path tempDir
+    ) throws IOException {
+        Path directory = tempDir.resolve("directory");
+        Path subDirectory = directory.resolve("subdirectory");
+        Path file = subDirectory.resolve("file.txt");
+
+        // Creating directories and files
+
+        Files.createDirectories(subDirectory);
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("Hello World!\nSecond Line!".getBytes());
+
+        // Writing to file
+
+        Files.copy(byteArrayInputStream, file);
+
+        Assertions.assertInstanceOf(BasicFileAttributes.class, Files.readAttributes(file, BasicFileAttributes.class));
+        Assertions.assertInstanceOf(BasicFileAttributeView.class, Files.getFileAttributeView(file, BasicFileAttributeView.class));
     }
 }
