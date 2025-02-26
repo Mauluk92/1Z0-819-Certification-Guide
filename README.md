@@ -5,10 +5,10 @@
 ## Overview
 
 This repository contains a tutorial of the certification guide of the 1Z0-819 Oracle exam.
-It is structured as a series of package, where each represents a chapter of _OCP ORACLE CERTIFIED PROFESSIONAL JAVA SE 11
+It is structured as a series of packages, where each represents a chapter of _OCP ORACLE CERTIFIED PROFESSIONAL JAVA SE 11
 DEVELOPER COMPLETE STUDY GUIDE_ by Jeanne Boyarsky and Scott Selikoff.
 Each chapter, in turn, is divided into sections, represented by a Java Class.
-Each class is also divided in concepts, exemplified by JUnit unitary test.
+Each class is also divided in concepts, exemplified by JUnit unit test.
 
 ## Index
 
